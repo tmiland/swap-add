@@ -100,6 +100,7 @@ create_swap(){
 	if [ ! -e $swapfile ]
 	then
 		if [ -e $swapfile ]
+		then
 			remove_old_swap
 		fi
 			dd if=/dev/zero of=$swapfile bs=1M count=$1
