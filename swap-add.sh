@@ -84,7 +84,6 @@ check_memory_and_swap(){
 			create_swap 2048
 		else
 			echo -e "\033[40;32mYour swap is not enough,need to add swap.\n\033[40;37m"
-			remove_old_swap
 			create_swap 2048
 		fi
 	fi
@@ -105,10 +104,10 @@ create_swap(){
 		/sbin/swapon $swapfile
 		/sbin/swapon -s
 		echo -e "\033[40;32mStep 3.Add swap partition successful.\n\033[40;37m"
-	# else
-	# 	echo -e "\033[1;40;31mThe /var/swap_file already exists.Will exit.\n\033[0m"
-	# 	rm -rf $LOCKfile
-	# 	exit 1
+	else
+		echo -e "\033[1;40;31mThe /var/swap_file already exists.Will exit.\n\033[0m"
+		rm -rf $LOCKfile
+		exit 1
 	fi
 }
 
