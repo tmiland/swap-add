@@ -119,7 +119,7 @@ create_swap(){
 
 remove_old_swap()
 {
-	old_swap_file=$(grep swap $fstab|grep -v "#"|awk '{print $1}')
+	old_swap_file=`grep swap $fstab|grep -v "#"|awk '{print $1}'`
 	swapoff $old_swap_file
 	cp -f $fstab ${fstab}_bak
 	sed -i '/swap/d' $fstab
@@ -179,7 +179,7 @@ check_memory_and_swap
 
 echo -e "\033[40;32mStep 4.Begin to modify $fstab.\n\033[40;37m"
 case "$os_release" in
-redhat|centos|fedora)
+redhat|centos)
 	config_rhel_fstab
 	;;
 ubuntu|debian)
