@@ -97,17 +97,18 @@ create_swap(){
 		rm -rf $LOCKfile
 		exit 1
 	fi
+	if [ -e $swapfile ]
+	then
+		echo -e "\033[1;40;31mThe /var/swap_file already exists.Will remove.\n\033[0m"
+		remove_old_swap
+	fi
 	if [ ! -e $swapfile ]
 	then
-		if [ -e $swapfile ]
-		then
-			remove_old_swap
-		fi
-			dd if=/dev/zero of=$swapfile bs=1M count=$1
-			/sbin/mkswap $swapfile
-			/sbin/swapon $swapfile
-			/sbin/swapon -s
-			echo -e "\033[40;32mStep 3.Add swap partition successful.\n\033[40;37m"
+		dd if=/dev/zero of=$swapfile bs=1M count=$1
+		/sbin/mkswap $swapfile
+		/sbin/swapon $swapfile
+		/sbin/swapon -s
+		echo -e "\033[40;32mStep 3.Add swap partition successful.\n\033[40;37m"
 	# else
 	# 	echo -e "\033[1;40;31mThe /var/swap_file already exists.Will exit.\n\033[0m"
 	# 	rm -rf $LOCKfile
