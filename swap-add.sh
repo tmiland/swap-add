@@ -16,12 +16,6 @@ check_system(){
 			echo "$os_release"
 			break
 		fi
-		if cat /proc/version | grep fedora >/dev/null 2>&1
-		then
-			os_release=fedora
-			echo "$os_release"
-			break
-		fi
 		if cat /proc/version | grep ubuntu >/dev/null 2>&1
 		then
 			os_release=ubuntu
