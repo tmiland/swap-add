@@ -84,6 +84,7 @@ check_memory_and_swap(){
 			create_swap 2048
 		else
 			echo -e "\033[40;32mYour swap is not enough,need to add swap.\n\033[40;37m"
+			remove_old_swap
 			create_swap 2048
 		fi
 	fi
