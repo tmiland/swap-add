@@ -4,9 +4,9 @@
 check_system(){
 	while true
 	do
-		if cat /proc/version | grep redhat >/dev/null 2>&1
+		if cat /proc/version | grep fedora >/dev/null 2>&1
 		then
-			os_release=redhat
+			os_release=fedora
 			echo "$os_release"
 			break
 		fi
@@ -105,9 +105,9 @@ create_swap(){
 	if [ ! -e $swapfile ]
 	then
 		dd if=/dev/zero of=$swapfile bs=1M count=$1
-		/sbin/mkswap $swapfile
-		/sbin/swapon $swapfile
-		/sbin/swapon -s
+		mkswap $swapfile
+		swapon $swapfile
+		swapon -s
 		echo -e "\033[40;32mStep 3. Successfully added swap partition.\n\033[40;37m"
 	# else
 	# 	echo -e "\033[1;40;31mThe /var/swap_file already exists.Will exit.\n\033[0m"
@@ -178,7 +178,7 @@ check_memory_and_swap
 
 echo -e "\033[40;32mStep 4. Begin to modify $fstab.\n\033[40;37m"
 case "$os_release" in
-redhat|centos)
+fedora|centos)
 	config_rhel_fstab
 	;;
 ubuntu|debian)
