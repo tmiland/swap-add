@@ -105,6 +105,7 @@ create_swap(){
 	if [ ! -e $swapfile ]
 	then
 		dd if=/dev/zero of=$swapfile bs=1M count=$1
+		chmod 600 $swapfile
 		mkswap $swapfile
 		swapon $swapfile
 		swapon -s
