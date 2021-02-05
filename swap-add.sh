@@ -8,24 +8,28 @@ check_system(){
 		then
 			os_release=fedora
 			echo "$os_release"
+			SUDO="sudo"
 			break
 		fi
 		if cat /proc/version | grep centos >/dev/null 2>&1
 		then
 			os_release=centos
 			echo "$os_release"
+			SUDO="sudo"
 			break
 		fi
 		if cat /proc/version | grep ubuntu >/dev/null 2>&1
 		then
 			os_release=ubuntu
 			echo "$os_release"
+			SUDO="sudo"
 			break
 		fi
 		if cat /proc/version | grep -i debian >/dev/null 2>&1
 		then
 			os_release=debian
 			echo "$os_release"
+			SUDO="sudo"
 			break
 		fi
 		break
@@ -106,9 +110,9 @@ create_swap(){
 	then
 		dd if=/dev/zero of=$swapfile bs=1M count=$1
 		chmod 600 $swapfile
-		mkswap $swapfile
-		swapon $swapfile
-		swapon -s
+		${SUDO} mkswap $swapfile
+		${SUDO} swapon $swapfile
+		${SUDO} swapon -s
 		echo -e "\033[40;32mStep 3. Successfully added swap partition.\n\033[40;37m"
 	# else
 	# 	echo -e "\033[1;40;31mThe /var/swap_file already exists.Will exit.\n\033[0m"
@@ -120,7 +124,7 @@ create_swap(){
 remove_old_swap()
 {
 	old_swap_file=$(grep swap $fstab|grep -v "#"|awk '{print $1}')
-	swapoff $old_swap_file
+	${SUDO} swapoff $old_swap_file
 	cp -f $fstab ${fstab}_bak
 	sed -i '/swap/d' $fstab
 }
