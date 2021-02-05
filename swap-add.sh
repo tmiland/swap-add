@@ -167,6 +167,7 @@ LOCKfile=/tmp/.`basename $0`
 if [ -f "$LOCKfile" ]
 then
 	echo -e "\033[1;40;31mLock file already exists, deleting lock file.\n\033[0m"
+	rm -rf $LOCKfile
 	exit
 else
 	echo -e "\033[40;32mStep 1. No lock file, creating lock file...\n\033[40;37m"
