@@ -40,6 +40,15 @@ check_root(){
 	[[ "`id -u`" != "0" ]] && echo -e "must be root user !" && exit 1
 }
 
+check_zram() {
+	if swapon | grep "zram" >/dev/null 2>&1
+	then
+		echo -e "\033[1;40;31mYour system is using SwapOnZRAM.\n\033[0m"
+		rm -rf $LOCKfile
+		exit
+	fi
+}
+
 check_memory_and_swap(){
 	mem_count=$(free -m | grep Mem | awk '{print $2}')
 	swap_count=$(free -m|grep Swap|awk '{print $2}')
@@ -131,12 +140,7 @@ remove_old_swap()
 
 config_rhel_fstab()
 {
-	if swapon | grep "zram" >/dev/null 2>&1
-	then
-		echo -e "\033[1;40;31mYour system is using SwapOnZRAM.\n\033[0m"
-		rm -rf $LOCKfile
-		exit 1
-	elif ! grep $swapfile $fstab >/dev/null 2>&1
+	if ! grep $swapfile $fstab >/dev/null 2>&1
 	then
 		echo -e "\033[40;32mBegin to modify $fstab.\n\033[40;37m"
 		echo "$swapfile	 swap	 swap defaults 0 0" >>$fstab
@@ -182,7 +186,7 @@ fi
 run(){
 swapfile=/swapfile
 fstab=/etc/fstab
-
+check_zram
 echo -e "\033[40;32mStep 3. Checking memory and swap.\n\033[40;37m"
 check_memory_and_swap
 
