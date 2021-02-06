@@ -131,7 +131,12 @@ remove_old_swap()
 
 config_rhel_fstab()
 {
-	if ! grep $swapfile $fstab >/dev/null 2>&1
+	if swapon | grep "zram" 
+	then
+		echo -e "\033[40;32mYour system is using SwapOnZRAM.\n\033[40;37m"
+		rm -rf $LOCKfile
+		exit 1
+	elif ! grep $swapfile $fstab >/dev/null 2>&1
 	then
 		echo -e "\033[40;32mBegin to modify $fstab.\n\033[40;37m"
 		echo "$swapfile	 swap	 swap defaults 0 0" >>$fstab
