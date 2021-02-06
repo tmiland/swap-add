@@ -175,7 +175,7 @@ fi
 }
 
 run(){
-swapfile=/var/swap_file
+swapfile=/swapfile
 fstab=/etc/fstab
 
 echo -e "\033[40;32mStep 3. Checking memory and swap.\n\033[40;37m"
