@@ -41,7 +41,7 @@ check_root(){
 }
 
 check_zram() {
-	if swapon | grep "zram" >/dev/null 2>&1
+	if ${SUDO} swapon | grep "zram" >/dev/null 2>&1
 	then
 		echo -e "\033[1;40;31mYour system is using SwapOnZRAM.\n\033[0m"
 		rm -rf $LOCKfile
