@@ -8,7 +8,7 @@ A script to add swap memory
 
 Usage:
 ```bash
-wget https://raw.githubusercontent.com/nanqinlang/swap-add/master/swap-add.sh
+wget https://raw.githubusercontent.com/tmiland/swap-add/master/swap-add.sh
 bash swap-add.sh
 ```
 
